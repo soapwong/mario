@@ -47,17 +47,22 @@ var __main = function() {
         title: 'img/headline/title.png',
         ready: 'img/headline/ready.png',
         gameover: 'img/headline/gameover.png',
+        //
+        t1: 'tiles/t1.png',
+        t2: 'tiles/t2.png',
+        t3: 'tiles/t3.png',
+        t4: 'tiles/t4.png',
         // score
-        s0: 'img/score/0.png',
-        s1: 'img/score/1.png',
-        s2: 'img/score/2.png',
-        s3: 'img/score/3.png',
-        s4: 'img/score/4.png',
-        s5: 'img/score/5.png',
-        s6: 'img/score/6.png',
-        s7: 'img/score/7.png',
-        s8: 'img/score/8.png',
-        s9: 'img/score/9.png',
+        // s0: 'img/score/0.png',
+        // s1: 'img/score/1.png',
+        // s2: 'img/score/2.png',
+        // s3: 'img/score/3.png',
+        // s4: 'img/score/4.png',
+        // s5: 'img/score/5.png',
+        // s6: 'img/score/6.png',
+        // s7: 'img/score/7.png',
+        // s8: 'img/score/8.png',
+        // s9: 'img/score/9.png',
     }
 
     var request = {
@@ -67,12 +72,13 @@ var __main = function() {
             log('mario file', window.bytes.length)
             var game = GuaGame.instance(60, images, function(g) {
                 // var s = Scene.new(g)
-                var s = SceneTitle.new(g)
+                // var s = SceneTitle.new(g)
+                var s = SceneEditor.new(g)
                 g.runWithScene(s)
             })
-        
+
             enableDebugMode(game, true)
-        
+
         },
     }
     ajax(request)

@@ -14,7 +14,7 @@ class GuaNesSprite {
         this.columnsOfSprite = 2
         this.w = this.pixelWidth * this.columnsOfSprite * 8
         this.h = this.pixelWidth * this.rowsOfSprite * 8
-    
+
         this.framesIndex = 0
         this.framesCount = 4
         //
@@ -77,7 +77,7 @@ class GuaNesSprite {
             }
         }
     }
-    
+
 
     frames() {
         return this.animations[this.animationName]
@@ -90,7 +90,7 @@ class GuaNesSprite {
         // 更新受力
         this.y += this.vy
         this.vy += this.gy * 0.2
-        var h = 385
+        var h = 100
         if (this.y > h) {
             this.y = h
         }
