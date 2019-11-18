@@ -24,6 +24,9 @@ class GuaNesSprite {
         // 重力和加速度
         this.gy = 10
         this.vy = 0
+        // 加速和摩擦
+        this.vx = 0
+        this.mx = 0
     }
     static new(...args) {
         return new this(...args)
@@ -87,10 +90,19 @@ class GuaNesSprite {
         // this.rotation = -45
     }
     update() {
+        // 更新 x 加速和摩擦
+        this.vx += this.mx
+        // 说明摩擦力已经把速度降至 0 以下, 停止摩擦
+        if (this.vx * this.mx > 0) {
+            this.vx = 0
+            this.mx = 0
+        } else {
+            this.x += this.vx
+        }
         // 更新受力
         this.y += this.vy
         this.vy += this.gy * 0.2
-        var h = 100
+        var h = 95
         if (this.y > h) {
             this.y = h
         }
@@ -126,6 +138,13 @@ class GuaNesSprite {
     move(x, keyStatus) {
         this.flipX = (x < 0)
         this.x += x
+        let speed = 0.5 * x
+        if (keyStatus == 'down') {
+            this.vx += speed
+            this.mx = -speed / 2
+        } else {
+
+        }
     }
     changeAnimation(name) {
         this.animationName = name

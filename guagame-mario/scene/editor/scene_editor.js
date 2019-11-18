@@ -75,22 +75,16 @@ class SceneEditor extends GuaScene {
     setupInputs() {
         var self = this
         var b = this.mario
-        let playerSpeed = 5
+        let playerSpeed = 2
         var game = this.game
         self.game.registerAction('a', function(keyStatus) {
             b.move(-playerSpeed, keyStatus)
-            // var s = Scene.new(game)
-            // game.replaceScene(s)
         })
         self.game.registerAction('d', function(keyStatus) {
             b.move(playerSpeed, keyStatus)
-            // var s = Scene.new(game)
-            // game.replaceScene(s)
         })
         self.game.registerAction('j', function(keyStatus) {
             b.jump()
-            // var s = Scene.new(game)
-            // game.replaceScene(s)
         })
     }
 }
