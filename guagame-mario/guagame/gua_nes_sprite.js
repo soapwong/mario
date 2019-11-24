@@ -1,6 +1,9 @@
 class GuaNesSprite {
-    constructor(game) {
+    constructor(game, map) {
         this.game = game
+        this.map = map
+        this.tileSize = map.tileSize
+        //
         this.tileOffset = 32784
         this.data = window.bytes.slice(this.tileOffset)
         // 为省事, 硬编码动画
@@ -27,6 +30,8 @@ class GuaNesSprite {
         // 加速和摩擦
         this.vx = 0
         this.mx = 0
+        this.maxSpeed = 8
+        // 和地图相关的数据
     }
     static new(...args) {
         return new this(...args)
@@ -89,9 +94,35 @@ class GuaNesSprite {
         this.vy = -10
         // this.rotation = -45
     }
+    updateGravity() {
+        // 拿到角色在地图中的坐标 i j
+        let i = Math.floor(this.x / this.tileSize)
+        let j = Math.floor(this.y / this.tileSize) + 2
+        let onTheGround = this.map.onTheGround(i, j)
+        if (onTheGround && this.vy > 0) {
+            this.vy = 0
+        } else {
+            this.y += this.vy
+            this.vy += this.gy * 0.2
+            // 如果陷入地面, 重置 y 位置
+            let j = Math.floor(this.y / this.tileSize) + 2
+            let onTheGround = this.map.onTheGround(i, j)
+            if (onTheGround) {
+                this.y = (j - 2) * this.tileSize
+            }
+            // var h = 95
+            // if (this.y > h) {
+            //     this.y = h
+            // }
+        }
+    }
     update() {
         // 更新 x 加速和摩擦
         this.vx += this.mx
+        // 限制最大速度
+        if (Math.abs(this.vx) >= this.maxSpeed) {
+            this.vx = parseInt(this.vx)
+        }
         // 说明摩擦力已经把速度降至 0 以下, 停止摩擦
         if (this.vx * this.mx > 0) {
             this.vx = 0
@@ -100,12 +131,7 @@ class GuaNesSprite {
             this.x += this.vx
         }
         // 更新受力
-        this.y += this.vy
-        this.vy += this.gy * 0.2
-        var h = 95
-        if (this.y > h) {
-            this.y = h
-        }
+        this.updateGravity()
 
         this.framesCount--
         if (this.framesCount === 0) {
