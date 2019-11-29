@@ -13,12 +13,10 @@ class GuaScene {
         img.scene = this
         this.elements.push(img)
     }
-    deleteElement(img) {
-        img.scene = this
-        var i = this.elements.indexOf(img)
-        if (i !== -1) {
-            this.elements.splice(i, 1)
-        }
+    removeElement(node) {
+        this.elements = this.elements.filter(e => {
+            return e != node
+        })
     }
     draw() {
         // 父类加 draw

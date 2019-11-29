@@ -38,12 +38,15 @@ class SceneTitle extends GuaScene {
                 let 点到了 = self.gun.pointInFrame(x, y)
                 if (点到了) {
                     startDrag = true
+                    self.tower = self.gun.clone()
+                    self.addElement(self.tower)
                 }
             } else if (status == 'move') {
-                self.gun.x = x
-                self.gun.y = y
+                self.tower.x = x
+                self.tower.y = y
             } else {
                 startDrag = false
+                self.removeElement(self.tower)
             }
             // log('mouse event', status, event)
         })
