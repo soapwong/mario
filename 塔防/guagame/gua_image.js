@@ -14,6 +14,11 @@ class GuaImage {
         var i = new this(...args)
         return i
     }
+    pointInFrame(x, y) {
+        let xIn = x >= this.x && x <= this.x + this.w
+        let yIn = y >= this.y && y <= this.y + this.h
+        return xIn && yIn
+    }
     draw() {
 		this.game.drawImage(this)
     }
@@ -25,13 +30,3 @@ class GuaImage {
 
     }
 }
-
-
-
-
-
-
-
-
-
-

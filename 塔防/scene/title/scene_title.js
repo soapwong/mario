@@ -1,44 +1,23 @@
 class SceneTitle extends GuaScene {
     constructor(game) {
         super(game)
-
         this.setup()
-        this.setupInputs()
     }
     debug() {
         this.birdSpeed = config.bird_speed.value
     }
     setup() {
-        var game = this.game
         // bg
-        var bg = GuaImage.new(game, 'bg')
+        var bg = GuaImage.new(this.game, 'bg')
         this.addElement(bg)
-        // title
-        var title = GuaImage.new(game, 'title')
-        title.x = 50
-        title.y = 30
-        this.addElement(title)
-        // ready
-        var ready = GuaImage.new(game, 'ready')
-        ready.x = 40
-        ready.y = 100
-        this.addElement(ready)
-        // 循环移动的地面
-        this.grounds = []
-        for (var i = 0; i < 30; i++) {
-            var g = GuaImage.new(game, 'ground')
-            g.x = i * 18
-            g.y = 450
-            this.addElement(g)
-            this.grounds.push(g)
-        }
-        this.skipCount = 4
-        // mario
-        let mario = GuaNesSprite.new(game)
-        this.addElement(mario)
-        mario.x = 100
-        mario.y = 385
-        this.mario = mario
+        // gun ui
+        var gun = GuaImage.new(this.game, 'gun')
+        gun.x = 400
+        gun.y = 300
+        this.gun = gun
+        this.addElement(gun)
+        //
+        this.setupInputs()
     }
     update() {
         super.update()
@@ -49,24 +28,27 @@ class SceneTitle extends GuaScene {
         game.replaceScene(s)
     }
     setupInputs() {
-        var self = this
-        var b = this.mario
-        let playerSpeed = 5
-        var game = this.game
-        self.game.registerAction('a', function(keyStatus) {
-            b.move(-playerSpeed, keyStatus)
-            // var s = Scene.new(game)
-            // game.replaceScene(s)
+        let self = this
+        // mouse inputs
+        let startDrag = false
+        this.game.registerMouse(function(event, status) {
+            let x = event.offsetX
+            let y = event.offsetY
+            if (status == 'down') {
+                let 点到了 = self.gun.pointInFrame(x, y)
+                if (点到了) {
+                    startDrag = true
+                }
+            } else if (status == 'move') {
+                self.gun.x = x
+                self.gun.y = y
+            } else {
+                startDrag = false
+            }
+            // log('mouse event', status, event)
         })
-        self.game.registerAction('d', function(keyStatus) {
-            b.move(playerSpeed, keyStatus)
-            // var s = Scene.new(game)
-            // game.replaceScene(s)
-        })
-        self.game.registerAction('j', function(keyStatus) {
-            b.jump()
-            // var s = Scene.new(game)
-            // game.replaceScene(s)
-        })
+        // keyboard inputs
+        // var b = this.mario
+        // let playerSpeed = 5
     }
 }

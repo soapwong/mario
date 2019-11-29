@@ -7,6 +7,7 @@ class GuaGame {
         this.scene = null
         this.actions = {}
         this.keydowns = {}
+        this.mouseActions = []
         this.canvas = document.querySelector('#id-canvas')
         this.context = this.canvas.getContext('2d')
             // events
@@ -16,6 +17,27 @@ class GuaGame {
         })
         window.addEventListener('keyup', function(event){
             self.keydowns[event.key] = 'up'
+        })
+        // mouse event
+        let moving = false
+        window.addEventListener('mousedown', event => {
+            moving = true
+            for (let a  of this.mouseActions) {
+                a(event, 'down')
+            }
+        })
+        window.addEventListener('mousemove', event => {
+            if (moving) {
+                for (let a  of this.mouseActions) {
+                    a(event, 'move')
+                }
+            }
+        })
+        window.addEventListener('mouseup', event => {
+            moving = false
+            for (let a  of this.mouseActions) {
+                a(event, 'up')
+            }
         })
         this.init()
     }
@@ -41,7 +63,10 @@ class GuaGame {
     registerAction(key, callback) {
         this.actions[key] = callback
     }
-
+    // 注册鼠标事件
+    registerMouse(callback) {
+        this.mouseActions.push(callback)
+    }
     runloop() {
         var g = this
         var actions = Object.keys(g.actions)
@@ -74,7 +99,7 @@ class GuaGame {
         var img = this.images[name]
         return img
     }
-    
+
     runWithScene(scene) {
         var g = this
         g.scene = scene
