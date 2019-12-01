@@ -9,6 +9,19 @@ class Tower1 extends GuaImage{
         this.range = 50
         this.target = null
     }
+    drawAttackRange() {
+        let context = this.game.context
+        context.fillStyle = 'rgba(200, 200, 200, 0.8)';
+        context.beginPath()
+        let v = this.center()
+        context.arc(v.x, v.y, this.range, 0, Math.PI * 2)
+        context.fill()
+    }
+    draw() {
+        this.drawAttackRange()
+        //
+        super.draw()
+    }
     update() {
         // TODO, 当敌人渐渐远去, 你要设置 target = null
         if (this.canAttack(this.target)) {

@@ -32,7 +32,7 @@ class SceneTitle extends GuaScene {
         let e1 = Enemy.new(this.game)
         this.addElement(e1)
         let e2 = Enemy.new(this.game)
-        e2.x -= 30
+        e2.x -= 60
         this.addElement(e2)
         //
         this.enemies.push(e1)

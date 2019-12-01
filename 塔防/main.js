@@ -30,6 +30,8 @@ var __main = function() {
         t4: 'tiles/t4.png',
         // gun
         gun: 'img/gun.png',
+        soldier: 'img/soldier.png',
+
     }
     var game = GuaGame.instance(60, images, function(g) {
         // var s = Scene.new(g)

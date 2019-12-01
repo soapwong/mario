@@ -1,6 +1,6 @@
 class Enemy extends GuaImage {
     constructor(game, name) {
-        name = name || 't1'
+        name = name || 'soldier'
         super(game, name)
         this.setup()
     }
@@ -10,6 +10,15 @@ class Enemy extends GuaImage {
         this.speed = 1
         this.hp = 8
         this.destination = 500
+    }
+    drawLifeBar() {
+        let context = this.game.context
+        context.fillStyle = 'green';
+        context.fillRect(this.x, this.y - 10, this.w, 10)
+    }
+    draw() {
+        super.draw()
+        this.drawLifeBar()
     }
     update() {
         if (this.dead) {
