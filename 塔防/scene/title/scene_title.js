@@ -1,3 +1,4 @@
+
 class SceneTitle extends GuaScene {
     constructor(game) {
         super(game)
@@ -7,21 +8,55 @@ class SceneTitle extends GuaScene {
         this.birdSpeed = config.bird_speed.value
     }
     setup() {
-        // bg
+        // 先初始化属性
+        this.enemies = []
+        this.towers = []
+        this.setupBG()
+        //
+        this.setupGameElements()
+        this.setupTower()
+        //
+        this.setupHUD()
+        //
+        this.setupInputs()
+    }
+    setupTower() {
+        let t1 = Tower1.new(this.game)
+        t1.x = 100
+        t1.y = 210
+        this.addElement(t1)
+        //
+        this.towers.push(t1)
+    }
+    setupGameElements() {
+        let e1 = Enemy.new(this.game)
+        this.addElement(e1)
+        let e2 = Enemy.new(this.game)
+        e2.x -= 30
+        this.addElement(e2)
+        //
+        this.enemies.push(e1)
+        this.enemies.push(e2)
+    }
+    setupBG() {
         var bg = GuaImage.new(this.game, 'bg')
         this.addElement(bg)
-        // gun ui
+    }
+    setupHUD() {
         var gun = GuaImage.new(this.game, 'gun')
         gun.x = 400
         gun.y = 300
         this.gun = gun
         this.addElement(gun)
-        //
-        this.setupInputs()
     }
     update() {
         super.update()
-        // 地面移动
+        // 给所有, 没有 target 的 tower 寻找目标
+        for (let t of this.towers) {
+            if (t.target === null) {
+                t.findTarget(this.enemies)
+            }
+        }
     }
     startGame(game) {
         var s = Scene.new(game)
