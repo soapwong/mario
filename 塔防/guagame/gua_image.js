@@ -32,7 +32,21 @@ class GuaImage {
         return xIn && yIn
     }
     draw() {
-		this.game.drawImage(this)
+        var context = this.game.context
+        context.save()
+
+        var w2 = this.w / 2
+        var h2 = this.h / 2
+        context.translate(this.x + w2, this.y + h2)
+        if (this.flipX) {
+            context.scale(-1, 1)
+        }
+        context.globalAlpha = this.alpha
+        context.rotate(this.rotation * Math.PI / 180)
+        context.translate(-w2, -h2)
+        context.drawImage(this.texture, 0, 0)
+
+        context.restore()
     }
     collide(img) {
         var c = rectIntersects(this, img) || rectIntersects(img, this)

@@ -12,4 +12,18 @@ class Vector {
         let dy = v.y - this.y
         return Math.sqrt(dx * dx + dy * dy)
     }
+    sub(vector) {
+        let v = vector
+        let dx = this.x - v.x
+        let dy = this.y - v.y
+        return Vector.new(dx, dy)
+    }
+    length() {
+        return Math.sqrt(this.x * this.x + this.y * this.y)
+    }
+    normal() {
+        let f = this.length(this) / 1
+        let v = Vector.new(this.x / f, this.y / f)
+        return v
+    }
 }

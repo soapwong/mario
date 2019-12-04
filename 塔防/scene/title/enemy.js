@@ -8,13 +8,20 @@ class Enemy extends GuaImage {
         this.dead = false
         this.y = 200
         this.speed = 1
-        this.hp = 8
+        this.maxHP = 8
+        this.hp = this.maxHP
         this.destination = 500
     }
     drawLifeBar() {
         let context = this.game.context
-        context.fillStyle = 'green';
-        context.fillRect(this.x, this.y - 10, this.w, 10)
+        context.fillStyle = 'red'
+        let [x, y, w, h] = [this.x, this.y - 10, this.w, 10]
+        // 总血量
+        context.fillRect(x, y, w, h)
+        // 剩余血量
+        context.fillStyle = 'green'
+        let w1 = w * (this.hp / this.maxHP)
+        context.fillRect(x, y, w1, h)
     }
     draw() {
         super.draw()
