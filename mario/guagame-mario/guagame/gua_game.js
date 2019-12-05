@@ -68,13 +68,13 @@ class GuaGame {
             g.runloop()
         }, 1000/window.fps)
     }
-            // events
+    // events
     textureByName(name) {
         // log('image by name', g.images)
         var img = this.images[name]
         return img
     }
-    
+
     runWithScene(scene) {
         var g = this
         g.scene = scene

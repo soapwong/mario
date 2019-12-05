@@ -25,13 +25,3 @@ class GuaImage {
 
     }
 }
-
-
-
-
-
-
-
-
-
-

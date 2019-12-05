@@ -1,4 +1,4 @@
-class Tower1 extends GuaImage{
+class Tower1 extends GuaImage {
     constructor(game, name) {
         name = name || 'gun'
         super(game, name)
@@ -30,11 +30,17 @@ class Tower1 extends GuaImage{
         this.updateRotation(this.target)
         if (this.canAttack(this.target)) {
             // log('攻击敌人')
-            // this.fire(target)
+            this.fire(this.target)
+        }
+    }
+    fire() {
+        if (this._fireCount !== 0) {
+            this._fireCount--
+            return false
+        } else {
+            this._fireCount = this._cooldown
             this.target.被攻击(this.attack)
-            if (this.target.dead) {
-                this.target = null
-            }
+            // log('攻击敌人', this.target, this.target.dead)
         }
     }
     updateRotation(target) {
@@ -45,22 +51,19 @@ class Tower1 extends GuaImage{
         }
     }
     canAttack(enemy) {
-        //
         let e = enemy
-        let enemyExist = e !== null && !e.dead
-        if (enemyExist) {
-            let can = this.center().distance(e.center()) < this.range
-            // 检查是否冷却
-            if (this._fireCount !== 0) {
-                this._fireCount--
-                return false
-            } else {
-                this._fireCount = this._cooldown
-                return can
-            }
-        } else {
-            return false
+        // 检查 enemy 是否为空, 避免隐式转换, 并且不要反写逻辑
+        if (e === null) {
+            return
         }
+        // 检查敌人是否死亡, 如果是, 取消目标
+        let enemyExist = e !== null && !e.dead
+        let inRange = this.center().distance(e.center()) < this.range
+        let can = enemyExist && inRange
+        if (!can) {
+            this.target = null
+        }
+        return can
     }
     findTarget(enemies) {
         for (let e of enemies) {

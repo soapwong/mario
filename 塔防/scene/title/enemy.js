@@ -5,10 +5,18 @@ class Enemy extends GuaImage {
         this.setup()
     }
     setup() {
+        this.stepIndex = 0
+        this.steps = [
+            [0, 170],
+            [0, 0],
+            [300, 0],
+            [300, 170],
+            [600, 170],
+        ]
         this.dead = false
         this.y = 200
-        this.speed = 1
-        this.maxHP = 8
+        this.speed = 2
+        this.maxHP = 18
         this.hp = this.maxHP
         this.destination = 500
     }
@@ -31,9 +39,25 @@ class Enemy extends GuaImage {
         if (this.dead) {
             return
         }
-        this.x += this.speed
-        if (this.x > this.destination) {
-            log('敌人已经到达')
+        let [dx, dy] = this.steps[this.stepIndex]
+        let signX = dx > this.x ? 1 : -1
+        let signY = dy > this.y ? 1 : -1
+        if (dx === this.x) {
+            signX = 0
+        }
+        if (dy === this.y) {
+            signY = 0
+        }
+        this.x += this.speed * signX
+        this.y += this.speed * signY
+        if (this.x === dx & this.y === dy) {
+            log('敌人已经到达目标点')
+            this.stepIndex++
+            // 判断敌人是否到达终点
+            if (this.stepIndex === this.steps.length) {
+                log('敌人到达终点')
+                this.die()
+            }
         }
     }
     被攻击(ap) {
