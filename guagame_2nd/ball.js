@@ -1,6 +1,6 @@
-var Ball = function() {
-    var image = imageFormPath('ball.png')
-    var o = {
+const Ball = function() {
+    let image = imageFormPath('ball.png')
+    let o = {
         image: image,
         x: 100,
         y: 200,

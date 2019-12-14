@@ -1,6 +1,6 @@
-var Paddle = function() {
-    var image = imageFormPath('paddle.png')
-    var o = {
+const Paddle = function() {
+    let image = imageFormPath('paddle.png')
+    let o = {
         image: image,
         x: 100,
         y: 200,

@@ -1,5 +1,5 @@
-var GuaGame = function(fps) {
-    var g = {
+const GuaGame = function(fps) {
+    let g = {
         actions: {},
         keydowns: {},
     }
@@ -25,11 +25,12 @@ var GuaGame = function(fps) {
         g.actions[key] = callback
     }
     // timer
-    setInterval(() => {
+    window.fps = 30
+    const runloop = function(fps) {
         // event
-        var actions = Object.keys(g.actions)
-        for (var i = 0; i < actions.length; i++) {
-            var key = actions[i]
+        let actions = Object.keys(g.actions)
+        for (let i = 0; i < actions.length; i++) {
+            let key = actions[i]
             if (g.keydowns[key]) {
                 g.actions[key]()
             }
@@ -40,6 +41,14 @@ var GuaGame = function(fps) {
         context.clearRect(0, 0, canvas.width, canvas.height)
         // draw
         g.draw()
+        //
+        setTimeout(() => {
+            runloop()
+        }, 1000 / window.fps)
+
+    }
+    setTimeout(() => {
+        runloop()
     }, 1000 / fps)
     return g
 }
