@@ -1,16 +1,16 @@
-const Block = function(position) {
+const Block = function(game, position) {
     // position 是 [0, 0 ]格式
     let p = position
-    let image = imageFormPath('block.png')
+    let img = game.imageByName('block')
     let o = {
-        image: image,
         x: p[0],
         y: p[1],
-        w: 50,
-        h: 20,
         alive: true,
         lifes: p[2] || 1,
     }
+    o.image = img.image
+    o.w = img.w
+    o.h = img.h
     o.kill = function() {
         o.lifes--
         if (o.lifes < 1) {

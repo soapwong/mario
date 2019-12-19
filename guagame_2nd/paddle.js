@@ -1,11 +1,14 @@
-const Paddle = function() {
-    let image = imageFormPath('paddle.png')
-    let o = {
-        image: image,
-        x: 100,
-        y: 200,
-        speed: 5,
-    }
+const Paddle = function(game) {
+    let o = game.imageByName('paddle')
+    // let o = {
+    //     image: image,
+    //     x: 100,
+    //     y: 200,
+    //     speed: 5,
+    // }
+    o.x = 100
+    o.y = 200
+    o.speed = 15
     o.move = function(x) {
         if (x < 0) {
             x = 0

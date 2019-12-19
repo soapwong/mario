@@ -1,6 +1,10 @@
+const e = sel => document.querySelector(sel)
+
 const log = console.log.bind(console)
 
-const e = sel => document.querySelector(sel)
+// const log = function(s) {
+//     e('#id-text-log').value += '\n' + s
+// }
 
 const imageFormPath = function(path) {
     let img = new Image()
