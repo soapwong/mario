@@ -1,8 +1,8 @@
-const Block = function(game, position) {
-    // position 是 [0, 0 ]格式
-    let p = position
-    let img = game.imageByName('block')
-    let o = {
+var Block = function(game, position) {
+    // positon 是 [0, 0] 格式
+    var p = position
+    var img = game.imageByName('block')
+    var o = {
         x: p[0],
         y: p[1],
         alive: true,
@@ -18,7 +18,8 @@ const Block = function(game, position) {
         }
     }
     o.collide = function(b) {
-        return o.alive && rectIntersects(o, b) || rectIntersects(b, o)
+        // log('block', o.alive, b)
+        return o.alive && (rectIntersects(o, b) || rectIntersects(b, o))
     }
     return o
 }
